@@ -1,7 +1,10 @@
+body{
+	overflow-x: hidden;
+}
 .navbar
 {
 	background-color: green;
-	
+
 }
 .nav-color
 {
@@ -18,4 +21,25 @@
 .badge
 {
 	background-color: black;
+}
+.worm-img
+{
+	margin-top: 100px;
+}
+.banner
+{
+	margin-top: 100px;
+	height: auto;
+	background-color: green;
+	color:white;
+	padding: 10px;
+}
+
+.sign
+{
+	margin-top: 20px;
+}
+
+.sign a{
+	color:white;
 }
