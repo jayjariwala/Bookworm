@@ -4,6 +4,13 @@ body{
 .navbar
 {
 	background-color: green;
+	opacity: 0.9;
+	border: 0 !important;
+
+}
+.login-main
+{
+	
 
 }
 .nav-color
@@ -34,7 +41,10 @@ body{
 	color:white;
 	padding: 10px;
 }
-
+.login-main
+{
+	margin-top: 50px;
+}
 .sign
 {
 	margin-top: 20px;
