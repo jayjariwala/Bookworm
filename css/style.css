@@ -1,0 +1,21 @@
+.navbar
+{
+	background-color: green;
+	
+}
+.nav-color
+{
+	color: white;
+	font-family: 'Lora', serif;
+}
+
+.well
+{
+	background-color:blue;
+	color: white;
+	opacity: 0.8;
+}
+.badge
+{
+	background-color: black;
+}
