@@ -17,6 +17,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
 
+    <script>
+
+
+
+$(document).ready(function(){
+  $('.alert-danger').hide();
+
+  $('#signup').submit(function(){
+var name=$('#inputname').val();
+var email=$('#inputEmail').val();
+var address=$('#address').val();
+var pass=$('#password').val();
+
+var formdata="name="+name+"&email="+email+"&address="+address+"&pass="+pass;
+
+    $.ajax({
+          url:"/signup",
+          type:"POST",
+          data:formdata,
+          success: function(data, textStatus, jqXHR)
+          {
+            console.log("data"+data);
+            if(data == "password")
+            {
+              $('.alert-danger').show();
+            }
+
+          },
+          error:function(jqXHR, textStatus, errorThrown)
+          {
+            return false;
+          }
+    });
+
+    return false;
+  });
+
+})
+
+
+    </script>
+
   </head>
   <body>
 
@@ -58,22 +100,26 @@
 
     <!--login form-->
 
-
-
 <br/>
 
 </br/>
+
+
+
+
+
 <div class="container login-main jumbotron">
+
 
 <center><img src="img/registration.png"  class="img img-responsive" width="50px;"></center>
  <center><legend style="font-family: 'Noto Serif', serif;"><h2>Register</h2></legend></center>
  <fieldset>
-<form class="form-horizontal"  id="form" data-toggle="validator" >
+<form class="form-horizontal"  id="signup" data-toggle="validator"  >
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">Name:</label>
   <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Enter your Name" class="form-control input-md" required>
+  <input id="inputname" name="textinput" type="text" placeholder="Enter your Name" class="form-control input-md" required>
   <div class="help-block with-errors"></div>
 
 
@@ -92,9 +138,9 @@
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Address">Address:</label>
+  <label class="col-md-4 control-label" style="font-family: 'Noto Serif', serif;" for="Address">Address:</label>
   <div class="col-md-4">
-    <textarea class="form-control" id="Address" name="Address" placeholder="Enter your full Address"></textarea>
+    <textarea class="form-control" id="address" name="Address" placeholder="Enter your full Address"></textarea>
   </div>
 </div>
 
@@ -107,15 +153,7 @@
 
   </div>
 </div>
-<!-- RePassword input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="password" style="font-family: 'Noto Serif', serif;">Re-Password:</label>
-  <div class="col-md-5">
-    <input id="password" name="password" type="password" placeholder="ReEnter Your Password" class="form-control input-md" data-match="#password" data-match-error="whoops, that didn't match" required>
-    <div class="help-block with-errors"></div>
 
-  </div>
-</div>
 
 <!-- Button -->
 <div class="form-group">
@@ -126,7 +164,18 @@
   </div>
 
 
+
 </div>
+
+
+
+<div class="alert alert-danger">
+  <strong>Password!</strong> password must be more than 5 char long.
+</div>
+
+
+
+
 </div>
 </fieldset>
 </form>
