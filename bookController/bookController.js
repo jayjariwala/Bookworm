@@ -20,7 +20,9 @@ module.exports = function(app)
   })
 
   app.get('/login',function(req,res){
-    res.render('login');
+    var status=req.param('success');
+    console.log("Status"+status);
+    res.render('login',{status:status});
   })
 
   app.get('/mybooks',function(req,res){
@@ -71,7 +73,7 @@ module.exports = function(app)
                     u_add:address
                   }
                   req.session.user=session_usr;
-                  res.redirect('/mybooks');
+                  res.send("success");
 
 
                 })

@@ -51,7 +51,10 @@ var formdata="name="+name+"&email="+email+"&address="+address+"&pass="+pass;
               $('.email').show();
               $('#inputEmail').val("");
             }
-
+            if(data = 'success')
+            {
+              location.href = "/login?success=1";
+            }
           },
           error:function(jqXHR, textStatus, errorThrown)
           {
