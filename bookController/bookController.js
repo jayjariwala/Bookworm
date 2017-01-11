@@ -36,15 +36,23 @@ var email=  req.body.email;
 var pass = req.body.password;
 
 user.find({email:email},function(err,data){
-  bcrypt.compare(pass, data[0].password, function(err, res) {
-    if(res== true)
-    {
+  if(data  == "")
+  {
+    console.log("TRUE");
+    respond.render('login',{failure:1,status:0});
+  }
+  else {
+    bcrypt.compare(pass, data[0].password, function(err, res) {
+      if(res== true)
+      {
 
-    }
-    else {
-      respond.render('login',{failure:1,status:0});
-    }
-  });
+      }
+      else {
+        respond.render('login',{failure:1,status:0});
+      }
+    });
+  }
+
 });
 
 
