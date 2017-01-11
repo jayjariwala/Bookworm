@@ -25,6 +25,7 @@ module.exports = function(app)
 
   app.get('/mybooks',function(req,res){
 
+    res.render('mybooks',{user:req.session.user});
     console.log("The User Name is: >> "+req.session.user.u_name);
   })
 
@@ -76,7 +77,7 @@ module.exports = function(app)
                 })
 
             });
-        }); 
+        });
 
 
 
