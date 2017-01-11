@@ -6,17 +6,17 @@ module.exports =
   {
     return mongoose.connect("mongodb://test:test@ds055594.mlab.com:55594/bookclub");
   },
-  createSchema : function()
+  createSchema : function(mongoose)
   {
 
-    var schema = mongoose.Schema;
+    var Schema = mongoose.Schema;
 
-    var userSchema= new schema({
-      user_id:String,
+    var userSchema= new Schema({
+      uid:String,
       name:String,
       email:String,
-      Address:String,
-      Pass:String
+      address:String,
+      password:String
 
     });
 

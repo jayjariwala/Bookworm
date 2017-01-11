@@ -6,8 +6,6 @@ var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 
-
-
 module.exports = function(app)
 {
 
@@ -22,7 +20,7 @@ module.exports = function(app)
   app.get('/login',function(req,res){
     var status=req.param('success');
     console.log("Status"+status);
-    res.render('login',{status:status});
+    res.render('login',{status:status,failure:0});
   })
 
   app.get('/mybooks',function(req,res){
@@ -30,6 +28,28 @@ module.exports = function(app)
     res.render('mybooks',{user:req.session.user});
     console.log("The User Name is: >> "+req.session.user.u_name);
   })
+
+
+app.post('/userAuthentication',function(req,respond){
+
+var email=  req.body.email;
+var pass = req.body.password;
+
+user.find({email:email},function(err,data){
+  bcrypt.compare(pass, data[0].password, function(err, res) {
+    if(res== true)
+    {
+
+    }
+    else {
+      respond.render('login',{failure:1,status:0});
+    }
+  });
+});
+
+
+
+});
 
   app.post('/signup',function(req,res){
 
@@ -56,23 +76,23 @@ module.exports = function(app)
             bcrypt.hash(pass, salt, function(err, hash) {
                 // Store hash in your password DB.
                 var new_usr = new user({
-                  user_id:uid,
+                  uid:uid,
                   name:name,
                   email:email,
-                  Address:address,
-                  Pass:hash
+                  address:address,
+                  password:hash
                 });
 
                 new_usr.save(function(err,data){
                   if(err) throw err;
 
-                  var session_usr= {
+                /*    var session_usr= {
                     user_id:uid,
                     u_name:name,
                     u_email:email,
                     u_add:address
                   }
-                  req.session.user=session_usr;
+                req.session.user=session_usr; */
                   res.send("success");
 
 

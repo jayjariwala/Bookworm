@@ -68,22 +68,37 @@
 
 <%
 }
+
   %>
+  <%if(failure =="1")
+  {
+    %>
+    <!--login form-->
+    <div class="alert alert-success">
+      <strong>Success!</strong> Registered Successfully please login.
+    </div>
+
+  <%
+  }
+    %>
 
 
 
-<form class="form-horizontal">
+
+
 
 <div class="container">
 <div class="jumbotron">
 <center><img src="img/books.png" height="130px" width="130px;"></center>
  <center><legend style="font-family: 'Noto Serif', serif;">BookWorm Login</legend></center>
  <fieldset>
+
+   <form class="form-horizontal" method="post" action="userAuthentication">
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">User ID:</label>
+  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">Email:</label>
   <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Enter your User ID" class="form-control input-md" required>
+  <input id="textinput" name="email" type="email" placeholder="Enter your User ID" class="form-control input-md" required>
 
   </div>
 </div>
@@ -104,9 +119,10 @@
     <button id="singlebutton" name="singlebutton" class="btn btn-primary" style="font-family: 'Noto Serif', serif;">Login</button>
   </div>
 </div>
+</form>
 </div>
 </fieldset>
-</form>
+
 </div>
 
 
