@@ -41,7 +41,15 @@ var formdata="name="+name+"&email="+email+"&address="+address+"&pass="+pass;
             console.log("data"+data);
             if(data == "password")
             {
-              $('.alert-danger').show();
+              $('.email').hide();
+              $('.pass').show();
+              $('#password').val("");
+
+            }
+            if(data == 'email')
+            {
+              $('.email').show();
+              $('#inputEmail').val("");
             }
 
           },
@@ -169,8 +177,12 @@ var formdata="name="+name+"&email="+email+"&address="+address+"&pass="+pass;
 
 
 
-<div class="alert alert-danger">
+<div class="alert alert-danger pass">
   <strong>Password!</strong> password must be more than 5 char long.
+</div>
+
+<div class="alert alert-danger email">
+  <strong>Email already Exists!</strong> please use another email.
 </div>
 
 

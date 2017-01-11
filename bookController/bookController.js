@@ -39,40 +39,53 @@ module.exports = function(app)
 
   if(pass.length < 5)
   {
-    console.log("comes here");
     res.send("password");
   }
   else {
+    user.count({email:email},function(err,count){
+        if(!count == 0)
+        {
+          res.send("email");
+        }
+        else {
+          //save the data
+          bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(pass, salt, function(err, hash) {
+                // Store hash in your password DB.
+                var new_usr = new user({
+                  user_id:uid,
+                  name:name,
+                  email:email,
+                  Address:address,
+                  Pass:hash
+                });
 
-    console.log("Recieved data name:"+name+"email:"+email+"Address:"+address+"Pass:"+pass);
-      bcrypt.genSalt(saltRounds, function(err, salt) {
-        bcrypt.hash(pass, salt, function(err, hash) {
-            // Store hash in your password DB.
-            var new_usr = new user({
-              user_id:uid,
-              name:name,
-              email:email,
-              Address:address,
-              Pass:hash
+                new_usr.save(function(err,data){
+                  if(err) throw err;
+
+                  var session_usr= {
+                    user_id:uid,
+                    u_name:name,
+                    u_email:email,
+                    u_add:address
+                  }
+                  req.session.user=session_usr;
+                  res.redirect('/mybooks');
+
+
+                })
+
             });
-
-            new_usr.save(function(err,data){
-              if(err) throw err;
-
-              var session_usr= {
-                user_id:uid,
-                u_name:name,
-                u_email:email,
-                u_add:address
-              }
-              req.session.user=session_usr;
-              res.redirect('/mybooks');
+        }); 
 
 
-            })
 
-        });
-    });
+        }
+    })
+    console.log("Recieved data name:"+name+"email:"+email+"Address:"+address+"Pass:"+pass);
+
+/*
+  */
 
 
   }
