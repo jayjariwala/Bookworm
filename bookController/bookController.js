@@ -21,6 +21,53 @@ module.exports = function(app)
 
   })
 
+app.get('/outstanding',function(req,res){
+
+  if(typeof req.session.user == "undefined") {
+  // obj is a valid variable, do something here.
+  res.redirect('/');
+  }
+  else {
+    res.render('outstanding',{user:req.session.user});
+  }
+
+});
+
+app.get('/unapproved',function(req,res){
+
+  if(typeof req.session.user == "undefined") {
+  // obj is a valid variable, do something here.
+  res.redirect('/');
+  }
+  else {
+    res.render('unapproved',{user:req.session.user});
+  }
+
+});
+
+app.get('/allbooks',function(req,res){
+  if(typeof req.session.user == "undefined") {
+  // obj is a valid variable, do something here.
+  res.redirect('/');
+  }
+  else {
+    res.render('allbooks',{user:req.session.user});
+  }
+
+});
+
+app.get('/settings',function(req,res){
+  if(typeof req.session.user == "undefined") {
+  // obj is a valid variable, do something here.
+  res.redirect('/');
+  }
+  else {
+    res.render('settings',{user:req.session.user});
+  }
+});
+
+
+
   app.get('/signup',function(req,res){
     res.render('signup');
   })
