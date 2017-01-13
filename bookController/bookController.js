@@ -45,6 +45,13 @@ user.find({email:email},function(err,data){
     bcrypt.compare(pass, data[0].password, function(err, res) {
       if(res== true)
       {
+        var session_usr= {
+        user_id:data[0].uid,
+        u_name:data[0].name,
+        u_email:data[0].email,
+        u_add:data[0].address
+      }
+    req.session.user=session_usr;
 
       }
       else {
@@ -94,13 +101,7 @@ user.find({email:email},function(err,data){
                 new_usr.save(function(err,data){
                   if(err) throw err;
 
-                /*    var session_usr= {
-                    user_id:uid,
-                    u_name:name,
-                    u_email:email,
-                    u_add:address
-                  }
-                req.session.user=session_usr; */
+
                   res.send("success");
 
 
