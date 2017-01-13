@@ -10,7 +10,15 @@ module.exports = function(app)
 {
 
   app.get('/',function(req,res){
-    res.render('index');
+
+    if(typeof req.session.user !== "undefined") {
+    // obj is a valid variable, do something here.
+    res.render('mybooks',{user:req.session.user});
+    }
+    else {
+          res.render('index');
+    }
+
   })
 
   app.get('/signup',function(req,res){
@@ -24,8 +32,14 @@ module.exports = function(app)
   })
 
   app.get('/mybooks',function(req,res){
-
-    res.render('mybooks',{user:req.session.user});
+    if(typeof req.session.user == "undefined") {
+    // obj is a valid variable, do something here.
+    res.redirect('/');
+    }
+    else {
+      res.render('mybooks',{user:req.session.user});
+    }
+    //res.render('mybooks',{user:req.session.user});
     console.log("The User Name is: >> "+req.session.user.u_name);
   })
 
@@ -48,10 +62,11 @@ user.find({email:email},function(err,data){
         var session_usr= {
         user_id:data[0].uid,
         u_name:data[0].name,
-        u_email:data[0].email,
+             u_email:data[0].email,
         u_add:data[0].address
       }
     req.session.user=session_usr;
+       respond.redirect('/');
 
       }
       else {
@@ -63,6 +78,13 @@ user.find({email:email},function(err,data){
 });
 
 
+
+});
+
+app.get('/logout',function(req,res){
+
+  req.session.destroy();
+  res.redirect('/');
 
 });
 
