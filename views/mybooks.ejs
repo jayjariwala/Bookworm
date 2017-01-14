@@ -20,9 +20,11 @@
 
 
 $(document).ready(function(){
-
+$('.loading').hide();
   console.log('ready');
   $('#addform').submit(function(){
+    $('.myBooks').html("");
+    $('.loading').show();
     var bookname=$('#bookinput').val();
 
     var formData="title="+bookname;
@@ -33,7 +35,11 @@ $(document).ready(function(){
     data : formData,
     success: function(data, textStatus, jqXHR)
     {
-      console.log(data);
+        $('.loading').hide();
+      data.forEach(function(each){
+        $('.myBooks').append("<div class='col-xs-6 col-md-2'><span class='thumbnail'><img src='"+each.book_cover+"'><center>"+each.book_name+"</center><center><a href='#'><i class='fa fa-trash'></i></a></center></span></div>");
+
+      })
     },
     error: function (jqXHR, textStatus, errorThrown)
     {
@@ -116,7 +122,13 @@ return false;
 
 <br/>
 <br/>
-<div class="row">
+<div class="loading">
+<center>
+  <img src="img/cube.gif" />
+</center>
+</div>
+<div class="row myBooks">
+
   <div class="col-xs-6 col-md-2">
     <span class="thumbnail">
       <img src="img/book1.png">
