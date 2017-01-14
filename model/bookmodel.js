@@ -33,7 +33,8 @@ module.exports =
       book_id:String,
       book_name:String,
       book_cover:String,
-      trade_status:String
+      trade_status:String,
+      time:String
     });
 
     return book=mongoose.model('books',bookSchema);

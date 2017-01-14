@@ -107,7 +107,8 @@ var p = JSON.parse(body)
       book_id:random,
       book_name:title1,
       book_cover:'http://history.fas.nyu.edu/docs/IO/1555/PlaceholderBook.png',
-      trade_status:'0'
+      trade_status:'0',
+      time:timestamp
     });
 
     if(p.totalItems == 0)
@@ -115,7 +116,10 @@ var p = JSON.parse(body)
 
       save_book.save(function(err,data){
         if(err) throw err;
-          book.find({uid=req.session.user_id,})
+        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+            console.log("DATA>>>>>>>"+userBooks);
+              res.send(userBooks);
+            }).sort({'time':-1});
       });
     }
     else {
@@ -123,8 +127,11 @@ var p = JSON.parse(body)
     save_book.book_cover=p.items[0].volumeInfo.imageLinks.thumbnail;
     save_book.save(function(err,data){
       if(err) throw err;
-      console.log("Book saved");
-    });
+        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+          console.log("DATA>>>>>>>"+userBooks);
+            res.send(userBooks);
+          }).sort({'time':-1});
+        });
 
 
     }
