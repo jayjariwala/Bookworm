@@ -22,6 +22,22 @@ module.exports =
 
     return user=mongoose.model('Users',userSchema);
 
+  },
+  createbookSchema : function(mongoose)
+  {
+
+    var Schema = mongoose.Schema;
+
+    var bookSchema= new Schema({
+      uid:String,
+      book_id:String,
+      book_name:String,
+      book_cover:String,
+      trade_status:String
+    });
+
+    return book=mongoose.model('books',bookSchema);
+
   }
 
 

@@ -1,9 +1,11 @@
 var model=require('../model/bookmodel');
 var connection=model.getConnection();
 var user = model.createSchema(connection);
+var book = model.createbookSchema(connection);
 var uuid=require('node-uuid');
 var bcrypt = require('bcrypt');
 var request = require('request');
+
 const saltRounds = 10;
 
 
@@ -92,11 +94,41 @@ app.get('/settings',function(req,res){
   })
 
 app.post('/addbook',function(req,res){
-
+var timestamp = Math.floor(Date.now() /1000);
+var ranNum = Math.random() * (100 - 0) + 100;
+var random= timestamp+ranNum;
 var title1=req.body.title;
-request("https://www.googleapis.com/books/v1/volumes?q="+title1+"+intitle:"+title1+"+maxResults=1&key=AIzaSyCYtf_bNICpqwIi3R71Q7bkbOi5QOEiPok", function (error, response, body) {
+request("https://www.googleapis.com/books/v1/volumes?q="+title1+"&intitle:"+title1+"&maxResults=1&key=AIzaSyCYtf_bNICpqwIi3R71Q7bkbOi5QOEiPok", function (error, response, body) {
+var p = JSON.parse(body)
+
   if (!error && response.statusCode == 200) {
-    console.log(body) // Show the HTML for the Google homepage.
+    var save_book = new book({
+      uid:req.session.user_id,
+      book_id:random,
+      book_name:title1,
+      book_cover:'http://history.fas.nyu.edu/docs/IO/1555/PlaceholderBook.png',
+      trade_status:'0'
+    });
+
+    if(p.totalItems == 0)
+    {
+
+      save_book.save(function(err,data){
+        if(err) throw err;
+          book.find({uid=req.session.user_id,})
+      });
+    }
+    else {
+      save_book.book_name=p.items[0].volumeInfo.title;
+    save_book.book_cover=p.items[0].volumeInfo.imageLinks.thumbnail;
+    save_book.save(function(err,data){
+      if(err) throw err;
+      console.log("Book saved");
+    });
+
+
+    }
+
   }
 })
 //

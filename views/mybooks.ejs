@@ -33,7 +33,7 @@ $(document).ready(function(){
     data : formData,
     success: function(data, textStatus, jqXHR)
     {
-        
+      console.log(data);
     },
     error: function (jqXHR, textStatus, errorThrown)
     {
@@ -120,24 +120,10 @@ return false;
   <div class="col-xs-6 col-md-2">
     <span class="thumbnail">
       <img src="img/book1.png">
+      <center> Name of the Book</center>
       <center><a href="#"><i class="fa fa-trash"></i></a></center>
+      </span>
     </div>
-</span>
-
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-trash"></i></a></center>
-    </div>
-</span>
-
-<div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-trash"></i></a></center>
-    </div>
-</span>
-
 
 </div>
 </div>
