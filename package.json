@@ -27,6 +27,7 @@
     "ejs": "^2.5.5",
     "express-session": "^1.14.2",
     "mongoose": "^4.7.6",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "request": "^2.79.0"
   }
 }

@@ -3,6 +3,7 @@ var connection=model.getConnection();
 var user = model.createSchema(connection);
 var uuid=require('node-uuid');
 var bcrypt = require('bcrypt');
+var request = require('request');
 const saltRounds = 10;
 
 
@@ -90,6 +91,17 @@ app.get('/settings',function(req,res){
     console.log("The User Name is: >> "+req.session.user.u_name);
   })
 
+app.post('/addbook',function(req,res){
+
+var title1=req.body.title;
+request("https://www.googleapis.com/books/v1/volumes?q="+title1+"+intitle:"+title1+"+maxResults=1&key=AIzaSyCYtf_bNICpqwIi3R71Q7bkbOi5QOEiPok", function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body) // Show the HTML for the Google homepage.
+  }
+})
+//
+
+});
 
 app.post('/userAuthentication',function(req,respond){
 

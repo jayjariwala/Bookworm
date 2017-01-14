@@ -16,7 +16,38 @@
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+<script>
 
+
+$(document).ready(function(){
+
+  console.log('ready');
+  $('#addform').submit(function(){
+    var bookname=$('#bookinput').val();
+
+    var formData="title="+bookname;
+
+    $.ajax({
+    url : "/addbook",
+    type: "POST",
+    data : formData,
+    success: function(data, textStatus, jqXHR)
+    {
+        
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+
+    }
+});
+
+return false;
+
+  });
+})
+
+
+</script>
 
   </head>
   <body>
@@ -72,14 +103,16 @@
 <br/>
 
 <h4> Add Books</h4>
+<form id="addform">
 
-<div class="form-group">
+<div class="form-group" id="addBooks">
 
-  <input id="textinput" name="textinput" type="text" placeholder="Enter Book Name" class="form-control input-md" required>
+  <input id="bookinput" name="textinput" type="text" placeholder="Enter Book Name" class="form-control input-md" required>
   <br/>
   <button class="btn btn-primary">Add</button>
   </div>
 </div>
+</form>
 
 <br/>
 <br/>
