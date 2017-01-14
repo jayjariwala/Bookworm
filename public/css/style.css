@@ -33,6 +33,17 @@ body{
 {
 	margin-top: 100px;
 }
+.cover {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 3px;
+    padding-top: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    margin: 3px;
+}
 .banner
 {
 	margin-top: 100px;

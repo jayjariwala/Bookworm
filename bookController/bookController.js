@@ -124,7 +124,7 @@ var p = JSON.parse(body)
     }
     else {
       save_book.book_name=p.items[0].volumeInfo.title;
-    save_book.book_cover=p.items[0].volumeInfo.imageLinks.thumbnail;
+    save_book.book_cover=p.items[0].volumeInfo.imageLinks.smallThumbnail;
     save_book.save(function(err,data){
       if(err) throw err;
         book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){

@@ -23,7 +23,7 @@ $(document).ready(function(){
 $('.loading').hide();
   console.log('ready');
   $('#addform').submit(function(){
-    $('.myBooks').html("");
+    $('.col').html("");
     $('.loading').show();
     var bookname=$('#bookinput').val();
 
@@ -37,7 +37,7 @@ $('.loading').hide();
     {
         $('.loading').hide();
       data.forEach(function(each){
-        $('.myBooks').append("<div class='col-xs-6 col-md-2'><span class='thumbnail'><img src='"+each.book_cover+"'><center>"+each.book_name+"</center><center><a href='#'><i class='fa fa-trash'></i></a></center></span></div>");
+        $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#'><i class='fa fa-trash'></i></a></center></div>");
 
       })
     },
@@ -127,17 +127,17 @@ return false;
   <img src="img/cube.gif" />
 </center>
 </div>
-<div class="row myBooks">
+<div class="row">
 
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
+  <div class="col-lg-12 col">
+      <div class="cover">
+      <img src="https://books.google.com/books/content?id=ZuKTvERuPG8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api">
       <center> Name of the Book</center>
       <center><a href="#"><i class="fa fa-trash"></i></a></center>
-      </span>
     </div>
 
-</div>
+  </div>
+
 </div>
 
 
