@@ -16,7 +16,30 @@
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <script>
 
+    $(document).ready(function(){
+      console.log("ready");
+
+      $.ajax({
+      url : "/trade_books",
+      type: "POST",
+      success: function(data, textStatus, jqXHR)
+      {
+       $('.loading').hide();
+        data.forEach(function(each){
+          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#'><i class='fa fa-retweet'></i></a></center></div>");
+        })
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+
+      }
+
+    });
+});
+
+    </script>
 
   </head>
   <body>
@@ -61,77 +84,26 @@
 </nav>
 <br/>
 <br/>
+<br/>
+<br/>
+
+
 
 <h2>All Books</h2>
 <h4>Click the <i class="fa fa-retweet"></i> to trade!</h4>
 <br/>
+<div class="loading">
+<center>
+  <img src="img/cube.gif" />
+</center>
+</div>
 <div class="row">
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
-  <div class="col-xs-6 col-md-2">
-    <span class="thumbnail">
-      <img src="img/book1.png">
-      <center><a href="#"><i class="fa fa-retweet"></i></a></center>
-    </div>
-  </span>
+
+  <div class="col-lg-12 col">
+
+
+  </div>
+
 </div>
 
 

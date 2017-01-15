@@ -81,12 +81,31 @@ app.get('/settings',function(req,res){
     res.render('login',{status:status,failure:0});
   })
 
+app.post('/myallbooks',function(req,res){
+
+  book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+      console.log("DATA>>>>>>>"+userBooks);
+        res.send(userBooks);
+      }).sort({'time':-1});
+
+});
+
+app.post('/trade_books',function(req,res){
+
+  book.find({},{'time':0},function(err,userBooks){
+      console.log("DATA>>>>>>>"+userBooks);
+        res.send(userBooks);
+      }).sort({'time':-1});
+
+});
+
   app.get('/mybooks',function(req,res){
     if(typeof req.session.user == "undefined") {
     // obj is a valid variable, do something here.
     res.redirect('/');
     }
     else {
+
       res.render('mybooks',{user:req.session.user});
     }
     //res.render('mybooks',{user:req.session.user});
@@ -138,7 +157,7 @@ var p = JSON.parse(body)
 
   }
 })
-//
+
 
 });
 

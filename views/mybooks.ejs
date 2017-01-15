@@ -20,7 +20,26 @@
 
 
 $(document).ready(function(){
-$('.loading').hide();
+$('.loading').show();
+
+  $.ajax({
+  url : "/myallbooks",
+  type: "POST",
+  success: function(data, textStatus, jqXHR)
+  {
+      $('.loading').hide();
+    data.forEach(function(each){
+      $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-trash' onclick='delbook("+each.book_id+")'></i></center></div>");
+
+    })
+  },
+  error: function (jqXHR, textStatus, errorThrown)
+  {
+
+  }
+  });
+
+
   console.log('ready');
   $('#addform').submit(function(){
     $('.col').html("");
@@ -37,7 +56,7 @@ $('.loading').hide();
     {
         $('.loading').hide();
       data.forEach(function(each){
-        $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#'><i class='fa fa-trash'></i></a></center></div>");
+        $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-trash' onclick='delbook("+each.book_id+")'></i></center></div>");
 
       })
     },
@@ -52,6 +71,13 @@ return false;
   });
 })
 
+
+</script>
+<script>
+  function delbook(value)
+  {
+    console.log('del book clicked'+value);
+  }
 
 </script>
 
@@ -130,11 +156,7 @@ return false;
 <div class="row">
 
   <div class="col-lg-12 col">
-      <div class="cover">
-      <img src="https://books.google.com/books/content?id=ZuKTvERuPG8C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api">
-      <center> Name of the Book</center>
-      <center><a href="#"><i class="fa fa-trash"></i></a></center>
-    </div>
+
 
   </div>
 
