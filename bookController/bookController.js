@@ -108,9 +108,9 @@ app.post('/trade_books',function(req,res){
   book.find({},{'time':0},function(err,userBooks){
       console.log("DATA>>>>>>>"+userBooks);
         userBooks.forEach(function (each){
-              if(each.user_id == req.session.user.user_id)
+              if(each.user_id == req.session.user.user_id || each.trade_status == 0 )
               {
-                each.book_id ='notweet'
+                each.book_id ='notrade'
               }
        });
 
@@ -149,7 +149,7 @@ var p = JSON.parse(body)
       book_id:random,
       book_name:title1,
       book_cover:'http://history.fas.nyu.edu/docs/IO/1555/PlaceholderBook.png',
-      trade_status:'0',
+      trade_status:'1',
       time:timestamp
     });
 
