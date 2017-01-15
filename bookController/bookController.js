@@ -90,6 +90,19 @@ app.post('/myallbooks',function(req,res){
 
 });
 
+app.post('/delmybook',function(req,res){
+
+    book.findOneAndRemove({uid:req.session.user_id,book_id:req.body.bookid},function(err,docs){
+        if(err) throw err;
+        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+            console.log("DATA>>>>>>>"+userBooks);
+              res.send(userBooks);
+            }).sort({'time':-1});
+      });
+
+});
+
+
 app.post('/trade_books',function(req,res){
 
   book.find({},{'time':0},function(err,userBooks){

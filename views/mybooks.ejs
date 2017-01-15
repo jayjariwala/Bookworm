@@ -76,7 +76,26 @@ return false;
 <script>
   function delbook(value)
   {
-    console.log('del book clicked'+value);
+      $('.loading').show();
+    var formdata="bookid="+value;
+    $.ajax({
+    url : "/delmybook",
+    type: "POST",
+    data:formdata,
+    success: function(data, textStatus, jqXHR)
+    {
+        $('.col').html("");
+        $('.loading').hide();
+      data.forEach(function(each){
+        $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-trash' onclick='delbook("+each.book_id+")'></i></center></div>");
+
+      });
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+
+    }
+    });
   }
 
 </script>
