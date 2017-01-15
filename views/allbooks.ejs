@@ -28,8 +28,9 @@
       {
        $('.loading').hide();
         data.forEach(function(each){
-          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#'><i class='fa fa-retweet'></i></a></center></div>");
+          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#' onclick='fun("+each.book_id+")'><i class='fa fa-retweet "+each.book_id+"'></i></a></center></div>");
         })
+        $('.notweet').hide();
       },
       error: function (jqXHR, textStatus, errorThrown)
       {

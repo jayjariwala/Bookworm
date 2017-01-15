@@ -29,7 +29,7 @@ module.exports =
     var Schema = mongoose.Schema;
 
     var bookSchema= new Schema({
-      uid:String,
+      user_id:String,
       book_id:String,
       book_name:String,
       book_cover:String,

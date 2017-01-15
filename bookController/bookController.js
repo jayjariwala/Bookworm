@@ -107,7 +107,16 @@ app.post('/trade_books',function(req,res){
 
   book.find({},{'time':0},function(err,userBooks){
       console.log("DATA>>>>>>>"+userBooks);
+        userBooks.forEach(function (each){
+              if(each.user_id == req.session.user.user_id)
+              {
+                each.book_id ='notweet'
+              }
+       });
+
+
         res.send(userBooks);
+
       }).sort({'time':-1});
 
 });
@@ -130,12 +139,13 @@ var timestamp = Math.floor(Date.now() /1000);
 var ranNum = Math.random() * (100 - 0) + 100;
 var random= timestamp+ranNum;
 var title1=req.body.title;
+
 request("https://www.googleapis.com/books/v1/volumes?q="+title1+"&intitle:"+title1+"&maxResults=1&key=AIzaSyCYtf_bNICpqwIi3R71Q7bkbOi5QOEiPok", function (error, response, body) {
 var p = JSON.parse(body)
 
   if (!error && response.statusCode == 200) {
     var save_book = new book({
-      uid:req.session.user_id,
+      user_id:req.session.user.user_id,
       book_id:random,
       book_name:title1,
       book_cover:'http://history.fas.nyu.edu/docs/IO/1555/PlaceholderBook.png',
