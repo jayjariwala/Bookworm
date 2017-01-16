@@ -83,8 +83,8 @@ app.get('/settings',function(req,res){
   })
 
 app.post('/myallbooks',function(req,res){
-
-  book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+console.log("MY ALLL BOOKS"+req.session.user_id);
+  book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
       console.log("DATA>>>>>>>"+userBooks);
         res.send(userBooks);
       }).sort({'time':-1});
@@ -93,9 +93,9 @@ app.post('/myallbooks',function(req,res){
 
 app.post('/delmybook',function(req,res){
 
-    book.findOneAndRemove({uid:req.session.user_id,book_id:req.body.bookid},function(err,docs){
+    book.findOneAndRemove({uid:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
         if(err) throw err;
-        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
+        book.find({user_id:req.session.user_id},{'time':0},function(err,userBooks){
             console.log("DATA>>>>>>>"+userBooks);
               res.send(userBooks);
             }).sort({'time':-1});
@@ -132,7 +132,7 @@ app.post('/trade_books',function(req,res){
       res.render('mybooks',{user:req.session.user});
     }
     //res.render('mybooks',{user:req.session.user});
-    console.log("The User Name is: >> "+req.session.user.u_name);
+
   })
 
 app.post('/addbook',function(req,res){
@@ -159,8 +159,7 @@ var p = JSON.parse(body)
 
       save_book.save(function(err,data){
         if(err) throw err;
-        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
-            console.log("DATA>>>>>>>"+userBooks);
+        book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
               res.send(userBooks);
             }).sort({'time':-1});
       });
@@ -170,8 +169,7 @@ var p = JSON.parse(body)
     save_book.book_cover=p.items[0].volumeInfo.imageLinks.smallThumbnail;
     save_book.save(function(err,data){
       if(err) throw err;
-        book.find({uid:req.session.user_id},{'time':0},function(err,userBooks){
-          console.log("DATA>>>>>>>"+userBooks);
+        book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
             res.send(userBooks);
           }).sort({'time':-1});
         });
