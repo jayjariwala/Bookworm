@@ -39,6 +39,24 @@ module.exports =
 
     return book=mongoose.model('books',bookSchema);
 
+  },
+  tradeSchema : function(mongoose)
+  {
+
+    var Schema = mongoose.Schema;
+
+    var tradeSchema= new Schema({
+      book_userId:String,
+      book_userName:String,
+      book_userEmail:String,
+      req_userId:String,
+      req_userEmail:String,
+      req_userAddress:String,
+      req_status:String
+    });
+
+    return trade=mongoose.model('trade',tradeSchema);
+
   }
 
 

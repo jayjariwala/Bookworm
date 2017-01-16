@@ -2,6 +2,7 @@ var model=require('../model/bookmodel');
 var connection=model.getConnection();
 var user = model.createSchema(connection);
 var book = model.createbookSchema(connection);
+var trade = model.tradeSchema(connection);
 var uuid=require('node-uuid');
 var bcrypt = require('bcrypt');
 var request = require('request');
@@ -183,6 +184,27 @@ var p = JSON.parse(body)
 
 
 });
+
+app.post('/trade',function(req,res){
+
+var bookid=req.body.bookid;
+
+console.log("The book id is"+bookid);
+  if(!bookid == 0)
+  {
+      book.update({book_id:bookid},{ $set: {trade_status:'0'}}, function(data){
+
+          console.log("Yes updated");
+        });
+  }
+
+});
+
+
+
+
+
+
 
 app.post('/userAuthentication',function(req,respond){
 
