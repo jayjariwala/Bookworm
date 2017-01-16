@@ -30,7 +30,7 @@
         data.forEach(function(each){
           $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-retweet "+each.book_id+"' onclick='trade("+each.book_id+")'></i></center></div>");
         })
-        $('.notrade').hide();
+        $('.notrade').removeClass('fa-retweet');
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
