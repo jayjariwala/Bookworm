@@ -191,8 +191,35 @@ console.log("The book id is"+bookid);
   if(!bookid == 0)
   {
       book.update({book_id:bookid},{ $set: {trade_status:'0'}}, function(data){
+        book.find({book_id:bookid},function(err,bookData){
+          var bookfrom=bookData[0].user_id;
+          var bookname=bookData[0].book_name;
 
-          console.log("Yes updated");
+              user.find({uid:bookfrom},function(err,Userinfo){
+                var email=Userinfo[0].email;
+                var book_userName=Userinfo[0].name;
+                console.log('req user id'+req.session.user.user_id);
+                console.log('req email'+req.session.user.u_email);
+                console.log('req address'+req.session.user.u_add);
+                var book_trade = new trade({
+                  book_userId:bookfrom,
+                  book_userName:book_userName,
+                  book_userEmail:email,
+                  req_userId:req.session.user.user_id,
+                  req_userEmail:req.session.user.u_email,
+                  req_userAddress:req.session.user.u_add,
+                  req_status:'Not Approved',
+                  book_name:bookname
+                });
+
+                book_trade.save(function(err,data){
+                  console.log("Book saved successfully");
+                });
+
+              });
+
+
+          });
         });
   }
 
