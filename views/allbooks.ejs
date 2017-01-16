@@ -27,8 +27,10 @@
       success: function(data, textStatus, jqXHR)
       {
        $('.loading').hide();
+       var i=0;
         data.forEach(function(each){
-          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-retweet "+each.book_id+"' onclick='trade("+each.book_id+")'></i></center></div>");
+          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-retweet trade"+i+" "+each.book_id+"' onclick='trade("+each.book_id+","+i+")'></i></center></div>");
+          i++;
         })
         $('.notrade').removeClass('fa-retweet');
       },
@@ -42,7 +44,7 @@
 
     </script>
     <script>
-    function trade(value)
+    function trade(value,ival)
     {
       var formdata="bookid="+value;
       $.ajax({
@@ -51,7 +53,8 @@
       data: formdata,
       success: function(data, textStatus, jqXHR)
       {
-
+        console.log(data.status);
+        $('.trade'+ival).removeClass('fa-retweet');
       /* $('.loading').hide();
         data.forEach(function(each){
           $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#' onclick='trade("+each.book_id+")'><i class='fa fa-retweet "+each.book_id+"'></i></a></center></div>");

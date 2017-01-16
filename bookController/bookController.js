@@ -213,7 +213,7 @@ console.log("The book id is"+bookid);
                 });
 
                 book_trade.save(function(err,data){
-                  console.log("Book saved successfully");
+                  res.send({status:bookid});
                 });
 
               });
