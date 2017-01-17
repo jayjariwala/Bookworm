@@ -60,9 +60,8 @@ app.get('/unapproved',function(req,res){
 
 app.post('/unapproved',function(req,res){
 
-  trade.find({book_userId:req.session.user.user_id},{'timestamp':0},function(err,userBooks){
-      console.log("DATA>>>>>>>"+userBooks);
-        res.send(userBooks);
+  trade.find({book_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
+        res.send(bookreq);
       }).sort({'timestamp':-1});
 
 });
