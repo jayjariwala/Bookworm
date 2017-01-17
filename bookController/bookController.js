@@ -43,7 +43,6 @@ app.post('/outstanding',function(req,res){
 
 
 
-
 });
 
 
@@ -61,7 +60,10 @@ app.get('/unapproved',function(req,res){
 
 app.post('/unapproved',function(req,res){
 
-console.log("comes to unapproved");
+  trade.find({book_userId:req.session.user.user_id},{'timestamp':0},function(err,userBooks){
+      console.log("DATA>>>>>>>"+userBooks);
+        res.send(userBooks);
+      }).sort({'timestamp':-1});
 
 });
 
