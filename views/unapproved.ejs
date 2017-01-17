@@ -26,7 +26,9 @@
       type: "POST",
       success: function(data, textStatus, jqXHR)
       {
-      console.log(data);
+        data.forEach(function(each){
+          $('.row').append("<div class='col-lg-3'><div class='panel panel-success'><div class='panel-heading'>"+each.book_name+" &nbsp; &nbsp; &nbsp;<a href='#' style='color:blue'><i class='fa fa-check fa-2x'></i></a> &nbsp; &nbsp; <a href='#' style='color:red'><i class='fa fa-close fa-2x'></i></a></div><div class='panel-body'><b>Reqest from:</b> <br>Name displayed<br/><b>Email Address:</b>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div></div>");
+        });
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
@@ -86,77 +88,19 @@
 <br/>
 <br/>
 
-<div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
+<div class="row">
 
-     <div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
 
-<div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
 
-<div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
+</div>
 
-<div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
 
-<div class="col-lg-3">
-      <div class="panel panel-success">
-          <div class="panel-heading">Alice in Wonderland &nbsp; &nbsp; &nbsp;<a href="#" style="color:blue"><i class="fa fa-check fa-2x"></i></a> &nbsp; &nbsp; <a href="#" style="color:red"><i class="fa fa-close fa-2x"></i></a></div>
-              <div class="panel-body">
-                  <b>Reqest from:</b> <br>Jay Jariwala <br/>
-                  <b>Email Address:</b> jay.jariwala@hotmail.com<br/>
-                  <b>Shipping Address:</b> <br/>583 Paulison Ave <br/>
-                  clifton, NJ , USA
-              </div>
-          </div>
-      </div>
+
+
+
+
+
+
 
 
 </div>
