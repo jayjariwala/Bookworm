@@ -16,7 +16,30 @@
     <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+    <script>
+    $(document).ready(function(){
+      console.log('ready');
 
+
+      $.ajax({
+      url : "/unapproved",
+      type: "POST",
+      success: function(data, textStatus, jqXHR)
+      {
+      
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+
+      }
+
+    });
+
+
+});
+
+
+    </script>
 
   </head>
   <body>

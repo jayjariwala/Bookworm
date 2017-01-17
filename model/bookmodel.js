@@ -53,7 +53,8 @@ module.exports =
       req_userEmail:String,
       req_userAddress:String,
       req_status:String,
-      book_name:String
+      book_name:String,
+      timestamp:String
     });
 
     return trade=mongoose.model('trade',tradeSchema);

@@ -37,6 +37,16 @@ app.get('/outstanding',function(req,res){
 
 });
 
+app.post('/outstanding',function(req,res){
+
+  console.log("comes to outstanding");
+
+
+
+
+});
+
+
 app.get('/unapproved',function(req,res){
 
   if(typeof req.session.user == "undefined") {
@@ -46,6 +56,12 @@ app.get('/unapproved',function(req,res){
   else {
     res.render('unapproved',{user:req.session.user});
   }
+
+});
+
+app.post('/unapproved',function(req,res){
+
+console.log("comes to unapproved");
 
 });
 
@@ -93,9 +109,9 @@ console.log("MY ALLL BOOKS"+req.session.user_id);
 
 app.post('/delmybook',function(req,res){
 
-    book.findOneAndRemove({uid:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
+    book.findOneAndRemove({user_id:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
         if(err) throw err;
-        book.find({user_id:req.session.user_id},{'time':0},function(err,userBooks){
+        book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
             console.log("DATA>>>>>>>"+userBooks);
               res.send(userBooks);
             }).sort({'time':-1});
@@ -184,7 +200,7 @@ var p = JSON.parse(body)
 });
 
 app.post('/trade',function(req,res){
-
+var timestamp = Math.floor(Date.now() /1000);
 var bookid=req.body.bookid;
 
 console.log("The book id is"+bookid);
@@ -209,7 +225,8 @@ console.log("The book id is"+bookid);
                   req_userEmail:req.session.user.u_email,
                   req_userAddress:req.session.user.u_add,
                   req_status:'Not Approved',
-                  book_name:bookname
+                  book_name:bookname,
+                  timestamp:timestamp
                 });
 
                 book_trade.save(function(err,data){
