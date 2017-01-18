@@ -27,7 +27,7 @@
       success: function(data, textStatus, jqXHR)
       {
         data.forEach(function(each){
-          $('.row').append("<div class='panel panel-success cover'><div class='panel-heading'>"+each.book_name+" &nbsp; &nbsp; &nbsp;<button class=' btn-xs btn btn-success'>Accept</button> <button class='btn-xs btn btn-danger'>Reject</button></button></div><div class='panel-body'><b>Reqest from:</b> <br>Name displayed<br/><b>Email Address:</b>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div>");
+          $('.row').append("<div class='panel panel-success cover'><div class='panel-heading'><center>"+each.book_name+"</center><br/><center><button class=' btn-xs btn btn-success'>Accept</button> <button class='btn-xs btn btn-danger'>Reject</button></center></div><div class='panel-body'><b>Reqest from:</b> <br/>Name displayed<br/><b>Email Address:</b><br/>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div>");
         });
       },
       error: function (jqXHR, textStatus, errorThrown)

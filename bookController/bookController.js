@@ -6,6 +6,7 @@ var trade = model.tradeSchema(connection);
 var uuid=require('node-uuid');
 var bcrypt = require('bcrypt');
 var request = require('request');
+var outstanding=require('./outstanding');
 
 const saltRounds = 10;
 
@@ -32,6 +33,8 @@ app.get('/outstanding',function(req,res){
   res.redirect('/');
   }
   else {
+    var count= outstanding.getoutstandingcount(trade,req);
+    console.log("The outstanding request"+count);
     res.render('outstanding',{user:req.session.user});
   }
 
@@ -55,6 +58,9 @@ app.get('/unapproved',function(req,res){
   res.redirect('/');
   }
   else {
+
+    var count= outstanding.getunapprovedcount(trade,req);
+    console.log("The outstanding request"+count);
     res.render('unapproved',{user:req.session.user});
   }
 
