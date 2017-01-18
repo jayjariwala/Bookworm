@@ -15,7 +15,6 @@ app.use(session({
 }));
 
 bookController(app);
-bookController(app);
 
 
 var port= Number(8080 || process.env.port);

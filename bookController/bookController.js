@@ -39,7 +39,7 @@ app.get('/outstanding',function(req,res){
 
 app.post('/outstanding',function(req,res){
 
-  trade.find({req_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
+    trade.find({req_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
         res.send(bookreq);
       }).sort({'timestamp':-1});
 
@@ -217,9 +217,6 @@ console.log("The book id is"+bookid);
               user.find({uid:bookfrom},function(err,Userinfo){
                 var email=Userinfo[0].email;
                 var book_userName=Userinfo[0].name;
-                console.log('req user id'+req.session.user.user_id);
-                console.log('req email'+req.session.user.u_email);
-                console.log('req address'+req.session.user.u_add);
                 var book_trade = new trade({
                   book_userId:bookfrom,
                   book_userName:book_userName,
@@ -227,7 +224,7 @@ console.log("The book id is"+bookid);
                   req_userId:req.session.user.user_id,
                   req_userEmail:req.session.user.u_email,
                   req_userAddress:req.session.user.u_add,
-                  req_status:'Not Approved',
+                  req_status:'NA',
                   book_name:bookname,
                   timestamp:timestamp
                 });
@@ -340,15 +337,9 @@ app.get('/logout',function(req,res){
         });
 
 
-
         }
     })
     console.log("Recieved data name:"+name+"email:"+email+"Address:"+address+"Pass:"+pass);
-
-/*
-  */
-
-
   }
 
 

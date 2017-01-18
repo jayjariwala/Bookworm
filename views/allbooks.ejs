@@ -20,7 +20,7 @@
 
     $(document).ready(function(){
       console.log("ready");
-
+      $('.trade-alert').hide();
       $.ajax({
       url : "/trade_books",
       type: "POST",
@@ -32,6 +32,8 @@
           $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><i class='fa fa-retweet trade"+i+" "+each.book_id+"' onclick='trade("+each.book_id+","+i+")'></i></center></div>");
           i++;
         })
+
+
         $('.notrade').removeClass('fa-retweet');
       },
       error: function (jqXHR, textStatus, errorThrown)
@@ -55,6 +57,8 @@
       {
         console.log(data.status);
         $('.trade'+ival).removeClass('fa-retweet');
+        $('.trade-alert').slideDown();
+        setTimeout(function(){ $('.trade-alert').fadeOut();}, 2000);
       /* $('.loading').hide();
         data.forEach(function(each){
           $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#' onclick='trade("+each.book_id+")'><i class='fa fa-retweet "+each.book_id+"'></i></a></center></div>");
@@ -79,6 +83,9 @@
   </head>
   <body>
   <div class="container">
+
+
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -121,7 +128,9 @@
 <br/>
 <br/>
 <br/>
-
+<div class="alert alert-success trade-alert">
+<strong>Trade Request Sent!</strong> Your trade request is to the owner of the book.
+</div>
 
 
 <h2>All Books</h2>
