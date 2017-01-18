@@ -39,7 +39,9 @@ app.get('/outstanding',function(req,res){
 
 app.post('/outstanding',function(req,res){
 
-  console.log("comes to outstanding");
+  trade.find({req_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
+        res.send(bookreq);
+      }).sort({'timestamp':-1});
 
 
 
