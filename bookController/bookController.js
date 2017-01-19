@@ -33,8 +33,7 @@ app.get('/outstanding',function(req,res){
   res.redirect('/');
   }
   else {
-    var count= outstanding.getoutstandingcount(trade,req);
-    console.log("The outstanding request"+count);
+
     res.render('outstanding',{user:req.session.user});
   }
 
@@ -120,10 +119,14 @@ app.post('/delmybook',function(req,res){
 
     book.findOneAndRemove({user_id:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
         if(err) throw err;
-        book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
+
+        // trade.findOneAndRemove({book_userId:req.session.user.user_id,})
+        /* book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
             console.log("DATA>>>>>>>"+userBooks);
               res.send(userBooks);
             }).sort({'time':-1});
+            */
+
       });
 
 });
@@ -224,13 +227,16 @@ console.log("The book id is"+bookid);
                 var email=Userinfo[0].email;
                 var book_userName=Userinfo[0].name;
                 var book_trade = new trade({
+
                   book_userId:bookfrom,
                   book_userName:book_userName,
                   book_userEmail:email,
                   req_userId:req.session.user.user_id,
+                  req_userName:req.session.user.u_name,
                   req_userEmail:req.session.user.u_email,
                   req_userAddress:req.session.user.u_add,
                   req_status:'NA',
+                  book_id:bookid,
                   book_name:bookname,
                   timestamp:timestamp
                 });
@@ -354,6 +360,20 @@ app.get('/logout',function(req,res){
 
   });
 
+app.post('/notification',function(req,res){
+
+  trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
+    if(err)throw err;
+
+    trade.count({book_userId:req.session.user.user_id,req_status:'NA'},function(err,Ucount){
+      if(err)throw err;
+      res.send({notify:{outstanding:Ocount,unapproved:Ucount}});
+
+    });
+
+  });
+
+});
 
 
 }

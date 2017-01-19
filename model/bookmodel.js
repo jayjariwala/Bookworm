@@ -50,9 +50,11 @@ module.exports =
       book_userName:String,
       book_userEmail:String,
       req_userId:String,
+      req_userName:String,
       req_userEmail:String,
       req_userAddress:String,
       req_status:String,
+      book_id:String,
       book_name:String,
       timestamp:String
     });
