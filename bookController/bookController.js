@@ -126,7 +126,7 @@ app.post('/delmybook',function(req,res){
             console.log("DATA>>>>>>>"+userBooks);
               res.send(userBooks);
             }).sort({'time':-1});
-        
+
        })
 
       });
@@ -179,12 +179,12 @@ var p = JSON.parse(body)
       user_id:req.session.user.user_id,
       book_id:random,
       book_name:title1,
-      book_cover:'http://history.fas.nyu.edu/docs/IO/1555/PlaceholderBook.png',
+      book_cover:'/img/book-placeholder.png',
       trade_status:'1',
       time:timestamp
     });
 
-    if(p.totalItems == 0)
+    if(p.totalItems == 0 || p.items[0].volumeInfo.imageLinks == undefined)
     {
 
       save_book.save(function(err,data){
