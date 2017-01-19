@@ -120,12 +120,14 @@ app.post('/delmybook',function(req,res){
     book.findOneAndRemove({user_id:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
         if(err) throw err;
 
-        // trade.findOneAndRemove({book_userId:req.session.user.user_id,})
-        /* book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
+       trade.findOneAndRemove({book_userId:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
+         if(err) throw err;
+         book.find({user_id:req.session.user.user_id},{'time':0},function(err,userBooks){
             console.log("DATA>>>>>>>"+userBooks);
               res.send(userBooks);
             }).sort({'time':-1});
-            */
+        
+       })
 
       });
 
