@@ -67,7 +67,7 @@ app.get('/unapproved',function(req,res){
 
 app.post('/unapproved',function(req,res){
 
-  trade.find({book_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
+  trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
         res.send(bookreq);
       }).sort({'timestamp':-1});
 
@@ -244,7 +244,12 @@ console.log("The book id is"+bookid);
                 });
 
                 book_trade.save(function(err,data){
-                  res.send({status:bookid});
+
+                  trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
+                    if(err)throw err;
+                    res.send({status:bookid,count:Ocount});
+                  });
+
                 });
 
               });
@@ -341,7 +346,6 @@ app.get('/logout',function(req,res){
                 new_usr.save(function(err,data){
                   if(err) throw err;
 
-
                   res.send("success");
 
 
@@ -373,6 +377,30 @@ app.post('/notification',function(req,res){
 
     });
 
+  });
+
+});
+
+app.post('/acceptreq',function(req,res){
+      console.log("come to accept");
+      trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'A'}}, function(data){
+        trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
+              res.send(bookreq);
+            }).sort({'timestamp':-1});
+      });
+
+});
+
+
+app.post('/rejectreq',function(req,res){
+console.log("come to reject");
+  trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'R'}}, function(data){
+    trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
+          book.update({book_id:req.body.book_id},{ $set: {trade_status:'1'}},function(success){
+              res.send(bookreq);
+          })
+
+        }).sort({'timestamp':-1});
   });
 
 });

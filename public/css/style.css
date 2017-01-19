@@ -13,12 +13,21 @@ body{
 
 
 }
+.fa-trash:hover
+{
+	color:maroon;
+	font-size:18px;
+}
 .nav-color
 {
 	color: white;
 	font-family: 'Lora', serif;
 }
-
+.fa-retweet:hover
+{
+	color:darkgreen;
+	font-size:18px;
+}
 .well
 {
 	background-color:blue;

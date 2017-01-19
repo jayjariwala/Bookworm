@@ -21,7 +21,7 @@
 
 $(document).ready(function(){
 $('.loading').show();
-
+$('.trade-alert').hide();
   $.ajax({
   url : "/myallbooks",
   type: "POST",
@@ -71,6 +71,9 @@ $('.loading').show();
             $('.col').append("<div class='cover'><center><img src='"+each.book_cover+"'></center><center>"+each.book_name+"<center></center><i class='fa fa-trash' onclick='delbook("+each.book_id+")'></i></center></div>");
 
           })
+          $('#bookinput').val("");
+          $('.trade-alert').slideDown();
+          setTimeout(function(){ $('.trade-alert').fadeOut();}, 2000);
         }
 
     },
@@ -129,6 +132,7 @@ return false;
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+
   <div class="container">
 
     <nav class="navbar navbar-default nav-background navbar-fixed-top">
@@ -172,6 +176,9 @@ return false;
 <br/>
 <br/>
 <br/>
+<div class="alert alert-success trade-alert">
+<strong>Added!</strong> A new book added for trading <i class="fa fa-retweet"></i>
+</div>
 <h2>My Books</h2>
 <br/>
 
