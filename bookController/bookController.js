@@ -224,12 +224,8 @@ console.log("The book id is"+bookid);
         if(err) throw err;
         if(count == 1)
         {
-            trade.update({book_id:bookid},{$set:{req_status:'NA',req_userId:req.session.user.user_id,req_userName:req.session.user.u_name,req_userEmail:req.session.user.u_email,req_userAddress:req.session.user.u_add}},function(data){
-              trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
-                if(err)throw err;
-                res.send({status:bookid,count:Ocount});
-              });
-            })
+          //send error message;
+          res.send({status:'error'});
         }
         else {
 
@@ -416,7 +412,7 @@ app.post('/acceptreq',function(req,res){
 
 app.post('/rejectreq',function(req,res){
 
-  trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'R'}}, function(data){
+trade.findOneAndRemove({book_userId:req.session.user.user_id,book_id:req.body.book_id},function(err,docs){
     trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
           book.update({book_id:req.body.book_id},{ $set: {trade_status:'1'}},function(success){
               res.send(bookreq);

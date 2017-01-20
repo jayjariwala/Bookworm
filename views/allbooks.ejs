@@ -62,19 +62,25 @@
       data: formdata,
       success: function(data, textStatus, jqXHR)
       {
+        console.log("Data status"+data.status);
+        if(data.status == 'error')
+        {
+            $('.trade'+ival).removeClass('fa-retweet');
+            $('.trade-alert').removeClass('alert-success');
+              $('.trade-alert').addClass('alert-danger');
+              $('.trade-alert').html("Sorry Somebody just claimed this book!");
+                $('.trade-alert').slideDown();
+                setTimeout(function(){ $('.trade-alert').fadeOut();}, 3500);
 
 
-        $('.trade'+ival).removeClass('fa-retweet');
-        $('.outstanding').html(""+data.count);
-        $('.trade-alert').slideDown();
-        setTimeout(function(){ $('.trade-alert').fadeOut();}, 3500);
-      /* $('.loading').hide();
-        data.forEach(function(each){
-          $('.col').append("<div class='cover'><img src='"+each.book_cover+"'><center><a href='#' onclick='trade("+each.book_id+")'><i class='fa fa-retweet "+each.book_id+"'></i></a></center></div>");
-        })
-        $('.notrade').hide();
+        }
+        else {
+          $('.trade'+ival).removeClass('fa-retweet');
+          $('.outstanding').html(""+data.count);
+          $('.trade-alert').slideDown();
+          setTimeout(function(){ $('.trade-alert').fadeOut();}, 3500);
+        }
 
-      */
       },
       error: function (jqXHR, textStatus, errorThrown)
       {
