@@ -415,7 +415,7 @@ app.post('/acceptreq',function(req,res){
 
 
 app.post('/rejectreq',function(req,res){
-console.log("come to reject");
+
   trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'R'}}, function(data){
     trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
           book.update({book_id:req.body.book_id},{ $set: {trade_status:'1'}},function(success){
@@ -424,6 +424,20 @@ console.log("come to reject");
 
         }).sort({'timestamp':-1});
   });
+
+});
+
+app.post('/cancelreq',function(req,res){
+
+  trade.findOneAndRemove({req_userId:req.session.user.user_id,book_id:req.body.bookid},function(err,docs){
+      if(err) throw err;
+      book.update({book_id:req.body.bookid},{ $set: {trade_status:'1'}}, function(data){
+        trade.find({req_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
+            res.send(bookreq);
+          }).sort({'timestamp':-1});
+      });
+
+    });
 
 });
 
