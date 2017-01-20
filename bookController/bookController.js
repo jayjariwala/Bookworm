@@ -220,43 +220,61 @@ var bookid=req.body.bookid;
 console.log("The book id is"+bookid);
   if(!bookid == 0)
   {
-      book.update({book_id:bookid},{ $set: {trade_status:'0'}}, function(data){
-        book.find({book_id:bookid},function(err,bookData){
-          var bookfrom=bookData[0].user_id;
-          var bookname=bookData[0].book_name;
+      trade.count({book_id:bookid},function(err,count){
+        if(err) throw err;
+        if(count == 1)
+        {
+            trade.update({book_id:bookid},{$set:{req_status:'NA',req_userId:req.session.user.user_id,req_userName:req.session.user.u_name,req_userEmail:req.session.user.u_email,req_userAddress:req.session.user.u_add}},function(data){
+              trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
+                if(err)throw err;
+                res.send({status:bookid,count:Ocount});
+              });
+            })
+        }
+        else {
 
-              user.find({uid:bookfrom},function(err,Userinfo){
-                var email=Userinfo[0].email;
-                var book_userName=Userinfo[0].name;
-                var book_trade = new trade({
+          book.update({book_id:bookid},{ $set: {trade_status:'0'}}, function(data){
+            book.find({book_id:bookid},function(err,bookData){
+              var bookfrom=bookData[0].user_id;
+              var bookname=bookData[0].book_name;
 
-                  book_userId:bookfrom,
-                  book_userName:book_userName,
-                  book_userEmail:email,
-                  req_userId:req.session.user.user_id,
-                  req_userName:req.session.user.u_name,
-                  req_userEmail:req.session.user.u_email,
-                  req_userAddress:req.session.user.u_add,
-                  req_status:'NA',
-                  book_id:bookid,
-                  book_name:bookname,
-                  timestamp:timestamp
-                });
+                  user.find({uid:bookfrom},function(err,Userinfo){
+                    var email=Userinfo[0].email;
+                    var book_userName=Userinfo[0].name;
+                    var book_trade = new trade({
 
-                book_trade.save(function(err,data){
+                      book_userId:bookfrom,
+                      book_userName:book_userName,
+                      book_userEmail:email,
+                      req_userId:req.session.user.user_id,
+                      req_userName:req.session.user.u_name,
+                      req_userEmail:req.session.user.u_email,
+                      req_userAddress:req.session.user.u_add,
+                      req_status:'NA',
+                      book_id:bookid,
+                      book_name:bookname,
+                      timestamp:timestamp
+                    });
 
-                  trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
-                    if(err)throw err;
-                    res.send({status:bookid,count:Ocount});
+                    book_trade.save(function(err,data){
+
+                      trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
+                        if(err)throw err;
+                        res.send({status:bookid,count:Ocount});
+                      });
+
+                    });
+
                   });
 
-                });
 
               });
+            });
+
+        }
+      });
 
 
-          });
-        });
   }
 
 });
@@ -384,9 +402,13 @@ app.post('/notification',function(req,res){
 app.post('/acceptreq',function(req,res){
       console.log("come to accept");
       trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'A'}}, function(data){
-        trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
-              res.send(bookreq);
-            }).sort({'timestamp':-1});
+        book.update({book_id:req.body.book_id,user_id:req.session.user.user_id},{ $set: {trade_status:'0'}},function(acceted){
+          trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
+                res.send(bookreq);
+              }).sort({'timestamp':-1});
+
+        })
+
       });
 
 });

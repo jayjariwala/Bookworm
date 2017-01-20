@@ -17,6 +17,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
     <script>
+    function cancel(val)
+    {
+      console.log("cancel the book request");
+    }
+
+    </script>
+    <script>
 
     $(document).ready(function(){
       console.log("ready");
@@ -37,15 +44,15 @@
           data.forEach(function(each){
             if(each.req_status == "A")
             {
-              $('.list-group').append('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">'+each.book_name+' &nbsp; &nbsp;<i class="fa fa-check-circle" style="color:green"></i> &nbsp;<i class="fa fa-trash"></i></h4><p class="list-group-item-text">Thanks Jay at jay.jariwala@hotmail.com</p></a>');
+              $('.list-group').append('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">'+each.book_name+' &nbsp; &nbsp;<i class="fa fa-check-circle" style="color:green"></i> &nbsp;</h4><p class="list-group-item-text">Your Request has been accepted by '+each.book_userName+'. Contact the user at '+each.book_userEmail+'</p></a>');
             }
             if(each.req_status == "NA")
             {
-              $('.list-group').append('<a href="#" class="list-group-item "><h4  class="list-group-item-heading" >'+each.book_name+'<i class="fa fa-warning" style="color:brown"></i></h4><p class="list-group-item-text">Not Approved Yet</p></a>');
+              $('.list-group').append('<a href="#" class="list-group-item "><h4  class="list-group-item-heading" >'+each.book_name+' <i class="fa fa-warning" style="color:brown"></i> <button class="btn btn-danger btn-xs" onclick="cancel('+each.book_id+')"> Cancel</button> </h4> <p class="list-group-item-text">Not Approved Yet</p></a>');
             }
             if(each.req_status == "R")
             {
-              $('.list-group').append('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">'+each.book_name+' &nbsp; &nbsp;<i class="fa fa-times-circle" style="color:red"></i> &nbsp;<i class="fa fa-trash"></i></h4><p class="list-group-item-text">Request Discarded</p></a>');
+              $('.list-group').append('<a href="#" class="list-group-item"><h4 class="list-group-item-heading">'+each.book_name+' &nbsp; &nbsp;<i class="fa fa-times-circle" style="color:red"></i> &nbsp;</h4><p class="list-group-item-text">Your request for the book has been rejected by its owner</p></a>');
 
             }
               });
