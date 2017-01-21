@@ -72,8 +72,7 @@ $('.trade-alert').hide();
 
           })
           $('#bookinput').val("");
-          $('.trade-alert').slideDown();
-          setTimeout(function(){ $('.trade-alert').fadeOut();}, 2000);
+
         }
 
     },
@@ -155,7 +154,7 @@ return false;
 
       {
       %>
-  <li class="active"><a href="/" style="background-color:lightblue"><%=user.u_name%><span class="sr-only" >(current)</span></a></li>
+  <li class="active"><a href="/" style="background-color:#333;color:white"><%=user.u_name%><span class="sr-only" >(current)</span></a></li>
     <%
    }
     %>
@@ -176,9 +175,7 @@ return false;
 <br/>
 <br/>
 <br/>
-<div class="alert alert-success trade-alert">
-<strong>Added!</strong> A new book added for trading <i class="fa fa-retweet"></i>
-</div>
+
 <h2>My Books</h2>
 <br/>
 
