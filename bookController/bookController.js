@@ -6,7 +6,7 @@ var trade = model.tradeSchema(connection);
 var uuid=require('node-uuid');
 var bcrypt = require('bcrypt');
 var request = require('request');
-var outstanding=require('./outstanding');
+
 
 const saltRounds = 10;
 
