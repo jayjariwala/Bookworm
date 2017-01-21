@@ -17,6 +17,97 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
 
+    <script>
+    $(document).ready(function(){
+          $('.address-alert').hide();
+          $('.pass-alert').hide();
+      $('#addform').submit(function(){
+        var formdata="add="+$('#address').val();
+        $.ajax({
+        url : "/changeAdd",
+        type: "POST",
+        data:formdata,
+        success: function(data, textStatus, jqXHR)
+        {
+          console.log("The New address is:"+data.newadd);
+          $('.oldaddress').html(data.newadd);
+          $('.address-alert').slideDown();
+          $('#address').val("");
+          setTimeout(function () {
+            $('.address-alert').fadeOut();
+          }, 2000);
+          return false;
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+        }
+        });
+        return false;
+      })
+
+
+      $('#passform').submit(function(){
+        var pass=$('#oldpass').val();
+        var newpass=$('#newpass').val();
+        var repass=$('#repass').val();
+        var formdata="pass="+pass+"&newpass="+newpass+"&repassword="+repass;
+
+        $.ajax({
+        url : "/changepass",
+        type: "POST",
+        data:formdata,
+        success: function(data, textStatus, jqXHR)
+        {
+          console.log("My Status is"+data.status);
+          if(data.status == 'notsame')
+          {
+            $('.pass-alert').removeClass('alert-success');
+              $('.pass-alert').addClass('alert-danger');
+              $('.pass-alert').html("New Password/ Re-password doesn't match");
+              $('.pass-alert').slideDown();
+          }
+          if(data.status == 'notenough')
+          {
+            $('.pass-alert').removeClass('alert-success');
+              $('.pass-alert').addClass('alert-danger');
+              $('.pass-alert').html("New Password must be more than 5 char long");
+              $('.pass-alert').slideDown();
+          }
+          if(data.status == 'oldpass')
+          {
+            $('.pass-alert').removeClass('alert-success');
+              $('.pass-alert').addClass('alert-danger');
+              $('.pass-alert').html("Wrong Password");
+              $('.pass-alert').slideDown();
+          }
+          if(data.status == 'success')
+          {
+              $('.pass-alert').slideDown();
+          }
+          $('#oldpass').val("");
+          $('#newpass').val("");
+          $('#repass').val("");
+          setTimeout(function () {
+            $('.pass-alert').fadeOut();
+          }, 2000);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+
+        }
+        });
+
+        return false;
+      })
+
+
+    })
+
+
+    </script>
+
 <script src="js/notification.js"></script>
   </head>
   <body>
@@ -63,9 +154,13 @@
 <br/>
 <br/>
 
+<div class="alert alert-success pass-alert">
+<strong>Password changed successfully!</strong>
+</div>
+
 <h2><center>Update Password</center></h2>
 
-<form class="form-horizontal" id="form" data-toggle="validator">
+<form class="form-horizontal" id="passform" data-toggle="validator">
 <fieldset>
 
 <!-- Form Name -->
@@ -75,7 +170,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput" style="font-family: 'Noto Serif', serif;">Old Password</label>
   <div class="col-md-4">
-    <input id="oldPass" name="oldPass" type="password" placeholder="Enter Your Old Password" class="form-control input-md" required>
+    <input id="oldpass" name="oldPass" type="password" placeholder="Enter Your Old Password" class="form-control input-md" required>
     <i style="color:yellow" class="oldPassError"></i>
         <div class="help-block with-errors"></div>
 
@@ -86,7 +181,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput" style="font-family: 'Noto Serif', serif;">New Password</label>
   <div class="col-md-4">
-    <input id="newPass" name="newPass" type="password" placeholder="Enter Your New Password" class="form-control input-md" required> <i style="color:yellow" class="newPassError"></i>
+    <input id="newpass" name="newPass" type="password" placeholder="Enter Your New Password" class="form-control input-md" required> <i style="color:yellow" class="newPassError"></i>
         <div class="help-block with-errors"></div>
 
   </div>
@@ -98,7 +193,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="passwordinput" style="font-family: 'Noto Serif', serif;">Re Password</label>
   <div class="col-md-4">
-    <input id="reNewPass" name="reNewPass" type="password" placeholder="Re Enter Your Password" data-match="#newPass" data-match-error="whoops, that didn't match" class="form-control input-md" required>
+    <input id="repass" name="reNewPass" type="password" placeholder="Re Enter Your Password" data-match="#newPass" data-match-error="whoops, that didn't match" class="form-control input-md" required>
     <div class="help-block with-errors"></div>
 
 
@@ -109,17 +204,20 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for=""></label>
   <div class="col-md-4">
-    <button id="submit" name="submit" class="btn btn-primary" style="font-family: 'Noto Serif', serif;">Update</button>
+    <button id="passsubmit" name="submit" class="btn btn-primary" style="font-family: 'Noto Serif', serif;">Update</button>
   </div>
 </div>
 
 </fieldset>
 </form>
 
+<div class="alert alert-success address-alert">
+<strong>Address Updated!</strong>
+</div>
 
 <h2><center>Update Address</center></h2>
 
-<form class="form-horizontal" id="form" data-toggle="validator">
+<form class="form-horizontal" id="addform" data-toggle="validator">
 <fieldset>
 
 <!-- Form Name -->
@@ -127,51 +225,24 @@
 
 <div class="form-group">
   <label class="col-md-4 control-label" for="Address">Your Old Address:</label>
-  <div class="col-md-4">
-    583, Paulison Ave <br/>
-    Clifton <br/>
-    NJ-07011 <br/>
+  <div class="col-md-4 oldaddress">
+    <%=user.u_add%>
   </div>
 </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">Street Name:</label>
+  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">New address:</label>
   <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Street Name With House Number" class="form-control input-md" required>
+  <textarea class="form-control" rows="5" id="address" placeholder="123 ABC Street, City, State, Country" required></textarea>
 
   </div>
 </div>
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">City:</label>
-  <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Your Current City" class="form-control input-md" required>
-
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">State:</label>
-  <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Your Current State With Pincode" class="form-control input-md" required>
-
-  </div>
-</div>
-<div class="form-group">
-  <label class="col-md-4 control-label" for="textinput" style="font-family: 'Noto Serif', serif;">Country:</label>
-  <div class="col-md-5">
-  <input id="textinput" name="textinput" type="text" placeholder="Current Living Country" class="form-control input-md" required>
-
-  </div>
-</div>
-
-
-
-
 
 
 <div class="form-group">
   <label class="col-md-4 control-label" for=""></label>
   <div class="col-md-4">
-    <button id="submit" name="submit" class="btn btn-primary" style="font-family: 'Noto Serif', serif;">Update</button>
+    <button id="addsubmit" name="submit" class="btn btn-primary" style="font-family: 'Noto Serif', serif;">Update</button>
   </div>
 </div>
 

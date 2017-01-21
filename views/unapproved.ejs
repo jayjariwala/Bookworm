@@ -28,9 +28,10 @@
       success: function(data, textStatus, jqXHR)
       {
         $('.row').html("");
-        if(data.length ==0)
+        if(data.book.length ==0)
         {
           $('.loading').hide();
+          $('.unapproved').html(data.count);
           $('.row').html("<center><h1 style='color:gray;margin-top:250px;'>No book request Found</h1></center>");
         }
         else {
@@ -61,14 +62,15 @@
       success: function(data, textStatus, jqXHR)
       {
         $('.row').html("");
-        if(data.length ==0)
+        $('.unapproved').html(data.count);
+        if(data.book.length ==0)
         {
           $('.loading').hide();
           $('.row').html("<center><h1 style='color:gray;margin-top:250px;'>No book request Found</h1></center>");
         }
         else {
           $('.loading').hide();
-          data.forEach(function(each){
+          data.book.forEach(function(each){
 
             $('.row').append("<div class='panel panel-success cover'><div class='panel-heading'><center>"+each.book_name+"</center><br/><center><button class=' btn-xs btn btn-success' onclick='accept("+each.book_id+");'>Accept</button> <button class='btn-xs btn btn-danger' onclick='reject("+each.book_id+");'>Reject</button></center></div><div class='panel-body'><b>Reqest from:</b> <br/>Name displayed<br/><b>Email Address:</b><br/>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div>");
           });
@@ -105,7 +107,7 @@
           $('.loading').hide();
           data.forEach(function(each){
 
-            $('.row').append("<div class='panel panel-success cover'><div class='panel-heading'><center>"+each.book_name+"</center><br/><center><button class=' btn-xs btn btn-success' onclick='accept("+each.book_id+");'>Accept</button> <button class='btn-xs btn btn-danger' onclick='reject("+each.book_id+");'>Reject</button></center></div><div class='panel-body'><b>Reqest from:</b> <br/>Name displayed<br/><b>Email Address:</b><br/>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div>");
+            $('.row').append("<div class='panel panel-success cover'><div class='panel-heading'><center>"+each.book_name+"</center><br/><center><button class=' btn-xs btn btn-success' onclick='accept("+each.book_id+");'>Accept</button> <button class='btn-xs btn btn-danger' onclick='reject("+each.book_id+");'>Reject</button></center></div><div class='panel-body'><b>Reqest from:</b> <br/>"+each.req_userName+"<br/><b>Email Address:</b><br/>"+each.req_userEmail+"<br/><b>Shipping Address:</b> <br/>"+each.req_userAddress+"</div></div></div>");
           });
         }
 

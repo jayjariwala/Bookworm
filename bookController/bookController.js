@@ -225,7 +225,7 @@ console.log("The book id is"+bookid);
         if(count == 1)
         {
           //send error message;
-          res.send({status:'error'});
+          res.send({status:'error',count:Ocount});
         }
         else {
 
@@ -400,7 +400,9 @@ app.post('/acceptreq',function(req,res){
       trade.update({book_id:req.body.book_id,book_userId:req.session.user.user_id},{ $set: {req_status:'A'}}, function(data){
         book.update({book_id:req.body.book_id,user_id:req.session.user.user_id},{ $set: {trade_status:'0'}},function(acceted){
           trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
-                res.send(bookreq);
+            trade.count({book_userId:req.session.user.user_id,req_status:'NA'},function(err,Ucount){
+                res.send({book:bookreq,count:Ucount});
+              });
               }).sort({'timestamp':-1});
 
         })
@@ -415,7 +417,9 @@ app.post('/rejectreq',function(req,res){
 trade.findOneAndRemove({book_userId:req.session.user.user_id,book_id:req.body.book_id},function(err,docs){
     trade.find({book_userId:req.session.user.user_id,req_status:'NA'},{'timestamp':0},function(err,bookreq){
           book.update({book_id:req.body.book_id},{ $set: {trade_status:'1'}},function(success){
-              res.send(bookreq);
+            trade.count({book_userId:req.session.user.user_id,req_status:'NA'},function(err,Ucount){
+                res.send({book:bookreq,count:Ucount});
+              });
           })
 
         }).sort({'timestamp':-1});
@@ -429,7 +433,11 @@ app.post('/cancelreq',function(req,res){
       if(err) throw err;
       book.update({book_id:req.body.bookid},{ $set: {trade_status:'1'}}, function(data){
         trade.find({req_userId:req.session.user.user_id},{'timestamp':0},function(err,bookreq){
-            res.send(bookreq);
+            trade.count({req_userId:req.session.user.user_id,req_status:'NA'},function(err,Ocount){
+              res.send({book:bookreq,count:Ocount});
+            });
+
+
           }).sort({'timestamp':-1});
       });
 
@@ -437,5 +445,65 @@ app.post('/cancelreq',function(req,res){
 
 });
 
+app.post('/changeAdd',function(req,res){
+
+  user.update({uid:req.session.user.user_id},{ $set: {address:req.body.add}},function(data){
+
+    trade.update({req_userId:req.session.user.user_id},{ $set: {req_userAddress:req.body.add}},{multi:true},function(data){
+      req.session.user.u_add=req.body.add;
+      res.send({newadd:req.body.add});
+
+    });
+
+
+  })
+
+
+})
+
+app.post('/changepass',function(req,response){
+
+    var pass=req.body.pass;
+    var newpass=req.body.newpass;
+    var repass=req.body.repassword;
+    if(newpass === repass )
+    {
+      if(newpass.length > 5)
+      {
+        user.find({uid:req.session.user.user_id},function(err,data){
+          if(err) throw err;
+          bcrypt.compare(pass, data[0].password, function(err, res) {
+            if(res == true)
+            {
+
+              bcrypt.genSalt(saltRounds, function(err, salt) {
+                bcrypt.hash(newpass, salt, function(err, hash) {
+                    user.update({uid:req.session.user.user_id},{ $set: {password:hash}},function(data){
+                      console.log("password updated");
+                      response.send({status:'success'});
+
+                    });
+
+                });
+              });
+            }
+            else {
+              response.send({status:'oldpass'});
+            }
+          });
+
+        })
+      }
+      else {
+        response.send({status:'notenough'});
+      }
+    }
+  else
+   {
+    response.send({staus:'notsame'});
+   }
+
+
+});
 
 }
