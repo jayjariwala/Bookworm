@@ -17,5 +17,5 @@ app.use(session({
 bookController(app);
 
 
-var port= Number(8080 || process.env.port);
+var port= Number(process.env.PORT || 8080);
 app.listen(port);
