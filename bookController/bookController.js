@@ -58,8 +58,7 @@ app.get('/unapproved',function(req,res){
   }
   else {
 
-    var count= outstanding.getunapprovedcount(trade,req);
-    console.log("The outstanding request"+count);
+  
     res.render('unapproved',{user:req.session.user});
   }
 
